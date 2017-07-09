@@ -14,7 +14,6 @@ class ORFEASELEFTHERIOU_API AOrfeasEleftheriouGameModeBase : public AGameModeBas
 {
 	GENERATED_BODY()
 	
-	
-	
+
 	
 };
