@@ -17,8 +17,5 @@ void AOrfeasEleftheriouGameModeBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	static int32 x = 0;
-	x++;
-
-	UE_LOG(LogTemp, Error, TEXT("x = %d"), x);
+	GLog->Log("Hello from Tick!");
 }
