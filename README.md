@@ -9,7 +9,7 @@ Click [here](http://orfeasel.com) to find out more about
  03 EndPlay Function Explanation
  04 BeginPlay and GLog Explanation
  05 Understanding the Blueprint Function Library
- 06 
+ 06 Calling Blueprint Functions from C++
  07
  08
  09 

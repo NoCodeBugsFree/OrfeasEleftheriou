@@ -11,7 +11,8 @@ AOrfeasEleftheriouGameModeBase::AOrfeasEleftheriouGameModeBase()
 void AOrfeasEleftheriouGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	GLog->Log("Hello from C++!");
+	
+	PrintOnScreen(1);
 }
 
 void AOrfeasEleftheriouGameModeBase::Tick(float DeltaSeconds)
