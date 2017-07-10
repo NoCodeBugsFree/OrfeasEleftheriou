@@ -13,7 +13,7 @@ Click [here](http://orfeasel.com) to find out more about
  07 Exposing C++ functions to Blueprints
  08 Exposing C++ variables to Blueprints
  09 Deleting a C++ Class
- 10
+ 10 Adding a C++ Class
  11
  12
  13
