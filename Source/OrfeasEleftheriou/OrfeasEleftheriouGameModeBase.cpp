@@ -12,7 +12,6 @@ void AOrfeasEleftheriouGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	PrintOnScreen(1);
 }
 
 void AOrfeasEleftheriouGameModeBase::Tick(float DeltaSeconds)

@@ -7,7 +7,16 @@
 #include "OrfeasEleftheriouGameModeBase.generated.h"
 
 /**
- * 
+ 
+	In order to delete a C++ class from your project follow the steps below:
+
+	- Close Visual Studio
+	- Close UE4 Editor
+	- Remove the corresponding .cpp and .h file from your disk in explorer
+	- Remove everything in the folder Binaries
+	- Right click the .uproject file and click Generate Visual Studio project Files
+	- Get back to your normal activity
+
  */
 UCLASS()
 class ORFEASELEFTHERIOU_API AOrfeasEleftheriouGameModeBase : public AGameModeBase
