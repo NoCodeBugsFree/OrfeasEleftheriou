@@ -35,5 +35,8 @@ protected:
 
 
 private:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	float Health = 10.f;
 	
 };

@@ -11,7 +11,7 @@ Click [here](http://orfeasel.com) to find out more about
  05 Understanding the Blueprint Function Library
  06 Calling Blueprint Functions from C++
  07 Exposing C++ functions to Blueprints
- 08
+ 08 Exposing C++ variables to Blueprints
  09 
  10
  11
