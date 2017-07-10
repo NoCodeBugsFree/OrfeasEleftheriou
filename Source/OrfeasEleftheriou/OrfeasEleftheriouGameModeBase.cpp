@@ -17,5 +17,10 @@ void AOrfeasEleftheriouGameModeBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	GLog->Log("Hello from Tick!");
+}
+
+void AOrfeasEleftheriouGameModeBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	GLog->Log("Hello from EndPlay!");
+	Super::EndPlay(EndPlayReason);
 }
