@@ -7,3 +7,4 @@ Click [here](http://orfeasel.com) to find out more about
  01 Static Keyword Explanation
  02 Tick Function Explanation
  03 EndPlay Function Explanation
+ 04 BeginPlay and GLog Explanation

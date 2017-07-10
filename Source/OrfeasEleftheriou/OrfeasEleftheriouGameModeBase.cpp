@@ -11,6 +11,7 @@ AOrfeasEleftheriouGameModeBase::AOrfeasEleftheriouGameModeBase()
 void AOrfeasEleftheriouGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
+	GLog->Log("Hello from C++!");
 }
 
 void AOrfeasEleftheriouGameModeBase::Tick(float DeltaSeconds)
@@ -21,6 +22,6 @@ void AOrfeasEleftheriouGameModeBase::Tick(float DeltaSeconds)
 
 void AOrfeasEleftheriouGameModeBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	GLog->Log("Hello from EndPlay!");
+	
 	Super::EndPlay(EndPlayReason);
 }
