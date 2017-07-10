@@ -14,6 +14,18 @@ class ORFEASELEFTHERIOU_API AOrfeasEleftheriouGameModeBase : public AGameModeBas
 {
 	GENERATED_BODY()
 	
+public:
 
+	AOrfeasEleftheriouGameModeBase();
+
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
+
+protected:
+
+
+
+private:
 	
 };
