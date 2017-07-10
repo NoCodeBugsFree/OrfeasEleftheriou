@@ -10,7 +10,7 @@ Click [here](http://orfeasel.com) to find out more about
  04 BeginPlay and GLog Explanation
  05 Understanding the Blueprint Function Library
  06 Calling Blueprint Functions from C++
- 07
+ 07 Exposing C++ functions to Blueprints
  08
  09 
  10

@@ -27,6 +27,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "AAA")
 	void PrintOnScreen(int32 IntToPrint);
 
+	UFUNCTION(BlueprintCallable, Category = "AAA")
+	void DoSomething();
+
 protected:
 
 

@@ -26,3 +26,8 @@ void AOrfeasEleftheriouGameModeBase::EndPlay(const EEndPlayReason::Type EndPlayR
 	
 	Super::EndPlay(EndPlayReason);
 }
+
+void AOrfeasEleftheriouGameModeBase::DoSomething()
+{
+	UE_LOG(LogTemp, Error, TEXT("DoSomething was called . . . "));
+}
