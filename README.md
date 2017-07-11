@@ -23,4 +23,4 @@ Click [here](http://orfeasel.com) to find out more about
  17 Timers and DeltaTime
  18 Understanding Pointers in C++
  19 Casting types in Unreal Engine
- 20 
+ 20 Structs Explanation
