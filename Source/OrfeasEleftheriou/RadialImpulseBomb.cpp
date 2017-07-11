@@ -31,6 +31,9 @@ void ARadialImpulseBomb::BeginPlay()
 
 	/**  SweepMultiByChannel example */
 	//PerformSweep();
+	
+	FTimerHandle Timer;
+	GetWorldTimerManager().SetTimer(Timer, this, &ARadialImpulseBomb::DoPeriodicCheck, LoopTime, true);
 
 }
 
@@ -41,7 +44,7 @@ void ARadialImpulseBomb::Tick(float DeltaTime)
 	
 	// AddForce();
 
-	PerformRaycast();
+	// PerformRaycast();
 }
 
 void ARadialImpulseBomb::AddRadialImpulseToOverlappedActors()
@@ -175,6 +178,11 @@ void ARadialImpulseBomb::PerformRaycast()
 	{
 		UE_LOG(LogTemp, Error, TEXT("Hitted actor: %s"), *Hit.GetActor()->GetName());
 	}
+}
+
+void ARadialImpulseBomb::DoPeriodicCheck()
+{
+	UE_LOG(LogTemp, Error, TEXT("DoPeriodicCheck() "));
 }
 
 void ARadialImpulseBomb::FillTheArrayOfOverlappedActors()

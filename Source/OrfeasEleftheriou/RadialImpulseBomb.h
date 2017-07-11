@@ -41,6 +41,9 @@ protected:
 
 	/**  SweepMultiByChannel example */
 	void PerformRaycast();
+
+	/** Calls by timer  */
+	void DoPeriodicCheck();
 	
 private:
 	
@@ -76,6 +79,12 @@ private:
 	/* Sphere segments - used for visualization only */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	int32 Segments = 100;
+
+	/* Loop Time for timer handle */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	float LoopTime = 1.f;
+
+
 
 	
 };
