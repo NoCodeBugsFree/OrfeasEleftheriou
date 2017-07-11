@@ -66,8 +66,7 @@ private:
 	/*The Force that we're going to apply to the chosen Actor with a default value*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	FVector ForceToAdd = FVector(0, 0, 5000);
-
-
+	
 	/* The Height of my Sphere starting from the location of the Actor */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	float SphereHeight = 200;
@@ -83,8 +82,6 @@ private:
 	/* Loop Time for timer handle */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	float LoopTime = 1.f;
-
-
 
 	
 };

@@ -32,8 +32,8 @@ void ARadialImpulseBomb::BeginPlay()
 	/**  SweepMultiByChannel example */
 	//PerformSweep();
 	
-	FTimerHandle Timer;
-	GetWorldTimerManager().SetTimer(Timer, this, &ARadialImpulseBomb::DoPeriodicCheck, LoopTime, true);
+	// FTimerHandle Timer;
+	// GetWorldTimerManager().SetTimer(Timer, this, &ARadialImpulseBomb::DoPeriodicCheck, LoopTime, true);
 
 }
 
