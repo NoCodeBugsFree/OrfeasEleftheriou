@@ -20,18 +20,23 @@ void ARadialImpulseBomb::BeginPlay()
 	Super::BeginPlay();
 	
 	/** fill the array of overlapping actors  */
-	TArray<AActor*> CollectedActors;
-	BoxComponent->GetOverlappingActors(CollectedActors);
-	
-	for (AActor* TestActor : CollectedActors)
-	{
-		if (TestActor)
-		{
-			NearbyActors.AddUnique(TestActor);
-		}
-	}
-	
+	FillTheArrayOfOverlappedActors();
+
 	/** AddRadialImpulse for each overlapping actor simulating physics  */
+	//AddRadialImpulseToOverlappedActors();
+
+}
+
+// Called every frame
+void ARadialImpulseBomb::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+	AddForce();
+}
+
+void ARadialImpulseBomb::AddRadialImpulseToOverlappedActors()
+{
 	for (AActor* TestActor : NearbyActors)
 	{
 		if (TestActor)
@@ -42,7 +47,7 @@ void ARadialImpulseBomb::BeginPlay()
 			* having as Radius and Strength the values from the Editor.
 			* The RIF_Linear impulse fall off parameter means that we want the impulse to fall off to zero when
 			* the max distance is reached.
-			* The last parameter means that we want to ignore the mass of each Static Mesh 
+			* The last parameter means that we want to ignore the mass of each Static Mesh
 			*/
 			if (SM)
 			{
@@ -52,10 +57,39 @@ void ARadialImpulseBomb::BeginPlay()
 	}
 }
 
-// Called every frame
-void ARadialImpulseBomb::Tick(float DeltaTime)
+void ARadialImpulseBomb::AddForce()
 {
-	Super::Tick(DeltaTime);
+	NearbyActors.Empty();
+	FillTheArrayOfOverlappedActors();
 
+	for (AActor* TestActor : NearbyActors)
+	{
+		if (TestActor && TestActor->GetRootComponent()->IsSimulatingPhysics())
+		{
+			UStaticMeshComponent* SM = Cast<UStaticMeshComponent>(TestActor->GetRootComponent());
+			if (SM)
+			{
+				/* When you want to apply a force you always need to multiply it's value by the
+				mass of the object that the object is applied to. */
+				SM->AddForce(ForceToAdd * SM->GetMass());
+			}
+		}
+	}
 }
+
+void ARadialImpulseBomb::FillTheArrayOfOverlappedActors()
+{
+	TArray<AActor*> CollectedActors;
+	BoxComponent->GetOverlappingActors(CollectedActors);
+
+	for (AActor* TestActor : CollectedActors)
+	{
+		if (TestActor)
+		{
+			NearbyActors.AddUnique(TestActor);
+		}
+	}
+}
+
+
 

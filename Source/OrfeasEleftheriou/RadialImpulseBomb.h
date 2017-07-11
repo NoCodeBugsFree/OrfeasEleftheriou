@@ -24,6 +24,17 @@ protected:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
+
+	/** fill the array of overlapping actors  */
+	void FillTheArrayOfOverlappedActors();
+
+	/** AddRadialImpulse for each overlapping actor simulating physics  */
+	void AddRadialImpulseToOverlappedActors();
+
+	/** Add the force per tick  */
+	void AddForce();
+	
 private:
 	
 	/* Box Component  */
@@ -41,6 +52,9 @@ private:
 	/* A dynamic array of nearby actors */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	TArray<AActor*> NearbyActors;
-	
+
+	/*The Force that we're going to apply to the chosen Actor with a default value*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	FVector ForceToAdd = FVector(0, 0, 5000);
 	
 };
