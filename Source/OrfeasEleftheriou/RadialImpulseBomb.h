@@ -34,6 +34,9 @@ protected:
 
 	/** Add the force per tick  */
 	void AddForce();
+
+	/** Add Impulse for each overlapping actor simulating physics  */
+	void AddImpulse();
 	
 private:
 	

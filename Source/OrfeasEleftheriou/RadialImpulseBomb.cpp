@@ -25,6 +25,8 @@ void ARadialImpulseBomb::BeginPlay()
 	/** AddRadialImpulse for each overlapping actor simulating physics  */
 	//AddRadialImpulseToOverlappedActors();
 
+	/** The difference between the Force and Impulse is that Impulse is recommended for one time instant burst.   */
+	AddImpulse();
 }
 
 // Called every frame
@@ -32,7 +34,7 @@ void ARadialImpulseBomb::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	AddForce();
+	// AddForce();
 }
 
 void ARadialImpulseBomb::AddRadialImpulseToOverlappedActors()
@@ -72,6 +74,21 @@ void ARadialImpulseBomb::AddForce()
 				/* When you want to apply a force you always need to multiply it's value by the
 				mass of the object that the object is applied to. */
 				SM->AddForce(ForceToAdd * SM->GetMass());
+			}
+		}
+	}
+}
+
+void ARadialImpulseBomb::AddImpulse()
+{
+	for (AActor* TestActor : NearbyActors)
+	{
+		if (TestActor && TestActor->GetRootComponent()->IsSimulatingPhysics())
+		{
+			UStaticMeshComponent* SM = Cast<UStaticMeshComponent>(TestActor->GetRootComponent());
+			if (SM)
+			{
+				SM->AddImpulse(ForceToAdd * SM->GetMass());
 			}
 		}
 	}
