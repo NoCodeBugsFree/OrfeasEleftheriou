@@ -30,7 +30,7 @@ void ARadialImpulseBomb::BeginPlay()
 	//AddImpulse();
 
 	/**  SweepMultiByChannel example */
-	PerformSweep();
+	//PerformSweep();
 
 }
 
@@ -40,6 +40,8 @@ void ARadialImpulseBomb::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	// AddForce();
+
+	PerformRaycast();
 }
 
 void ARadialImpulseBomb::AddRadialImpulseToOverlappedActors()
@@ -142,6 +144,37 @@ void ARadialImpulseBomb::PerformSweep()
 	/*Draw the sphere in the viewport*/
 	DrawDebugSphere(GetWorld(), CenterOfSphere, CollisionShape.GetSphereRadius(), Segments, FColor::Green, true);
 
+}
+
+void ARadialImpulseBomb::PerformRaycast()
+{
+	//Hit contains information about what the raycast hit.
+	FHitResult Hit;
+
+	//The length of the ray in units.
+	//For more flexibility you can expose a public variable in the editor
+	float RayLength = 2000.f;
+
+	//The Origin of the raycast
+	FVector StartLocation = GetActorLocation();
+
+	//The EndLocation of the raycast
+	FVector EndLocation = StartLocation + (GetActorForwardVector() * RayLength);
+
+	//Collision parameters. The following syntax means that we don't want the trace to be complex
+	FCollisionQueryParams CollisionParameters;
+	
+	GetWorld()->LineTraceSingleByChannel(Hit, StartLocation, EndLocation, ECC_WorldStatic, CollisionParameters);
+
+	//DrawDebugLine is used in order to see the raycast we performed
+	//The boolean parameter used here means that we want the lines to be persistent so we can see the actual raycast
+	//The last parameter is the width of the lines.
+	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, true, -1, 0, 1.f);
+	
+	if (Hit.GetActor())
+	{
+		UE_LOG(LogTemp, Error, TEXT("Hitted actor: %s"), *Hit.GetActor()->GetName());
+	}
 }
 
 void ARadialImpulseBomb::FillTheArrayOfOverlappedActors()

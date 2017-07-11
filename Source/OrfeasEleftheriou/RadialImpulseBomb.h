@@ -38,6 +38,9 @@ protected:
 
 	/**  SweepMultiByChannel example */
 	void PerformSweep();
+
+	/**  SweepMultiByChannel example */
+	void PerformRaycast();
 	
 private:
 	

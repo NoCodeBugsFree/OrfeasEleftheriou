@@ -19,7 +19,7 @@ Click [here](http://orfeasel.com) to find out more about
  13 Adding Force to an Actor
  14 Adding Impulse to an Actor
  15 Tracing multiple objects - SweepMultiByChannel
- 16 
+ 16 Single Line Raycasting - LineTraceSingleByChannel
  17 
  18 
  19 
