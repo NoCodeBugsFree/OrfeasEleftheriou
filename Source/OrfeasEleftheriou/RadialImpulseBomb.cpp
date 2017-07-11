@@ -2,6 +2,7 @@
 
 #include "RadialImpulseBomb.h"
 #include "Components/BoxComponent.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 ARadialImpulseBomb::ARadialImpulseBomb()
@@ -10,7 +11,7 @@ ARadialImpulseBomb::ARadialImpulseBomb()
 	PrimaryActorTick.bCanEverTick = true;
 
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
-	BoxComponent->SetupAttachment(RootComponent);
+	SetRootComponent(BoxComponent);
 	BoxComponent->SetBoxExtent(FVector(200.f));
 }
 
@@ -26,7 +27,11 @@ void ARadialImpulseBomb::BeginPlay()
 	//AddRadialImpulseToOverlappedActors();
 
 	/** The difference between the Force and Impulse is that Impulse is recommended for one time instant burst.   */
-	AddImpulse();
+	//AddImpulse();
+
+	/**  SweepMultiByChannel example */
+	PerformSweep();
+
 }
 
 // Called every frame
@@ -92,6 +97,51 @@ void ARadialImpulseBomb::AddImpulse()
 			}
 		}
 	}
+}
+
+void ARadialImpulseBomb::PerformSweep()
+{
+	/* TArray is the collection that contains all the HitResults */
+	TArray<FHitResult> HitResults;
+
+	/* The Start location of the sphere */
+	FVector StartLocation = GetActorLocation();
+
+	/* The End location of the sphere is equal to the default location of the actor plus the height we will enter from the editor
+	To extend this functionality, you can replace the height variable with a FVector */
+	FVector EndLocation = GetActorLocation();
+	EndLocation.Z += SphereHeight;
+
+	/* Search for static objects only */
+	ECollisionChannel ECC = ECollisionChannel::ECC_WorldStatic;
+
+	/* Declare the Collision Shape, assign a Sphere shape and set it's radius */
+	FCollisionShape CollisionShape;
+	CollisionShape.ShapeType = ECollisionShape::Sphere;
+	CollisionShape.SetSphere(SphereRadius);
+
+	/* Perform the actual raycast. This method returns true if there is at least 1 hit. */
+	bool bHitSomething = GetWorld()->SweepMultiByChannel(HitResults, StartLocation, EndLocation, FQuat::FQuat(), ECC, CollisionShape);
+
+	/* If the raycast hit a number of objects, iterate through them and print their name in the console */
+	if (bHitSomething)
+	{
+		for (FHitResult& Hit : HitResults)
+		{
+			if (Hit.GetActor())
+			{
+				UE_LOG(LogTemp, Error, TEXT("%s"), *Hit.GetActor()->GetName());
+			}
+		}
+	}
+
+	/* In order to draw the sphere of the first image, I will use the DrawDebugSphere function which resides in the DrawDebugHelpers.h
+	This function needs the center of the sphere which in this case is provided by the following equation */
+	FVector CenterOfSphere = ((EndLocation - StartLocation) / 2) + StartLocation;
+
+	/*Draw the sphere in the viewport*/
+	DrawDebugSphere(GetWorld(), CenterOfSphere, CollisionShape.GetSphereRadius(), Segments, FColor::Green, true);
+
 }
 
 void ARadialImpulseBomb::FillTheArrayOfOverlappedActors()

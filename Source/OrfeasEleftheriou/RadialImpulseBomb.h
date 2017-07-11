@@ -23,9 +23,7 @@ protected:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-
-
+	
 	/** fill the array of overlapping actors  */
 	void FillTheArrayOfOverlappedActors();
 
@@ -37,6 +35,9 @@ protected:
 
 	/** Add Impulse for each overlapping actor simulating physics  */
 	void AddImpulse();
+
+	/**  SweepMultiByChannel example */
+	void PerformSweep();
 	
 private:
 	
@@ -59,5 +60,19 @@ private:
 	/*The Force that we're going to apply to the chosen Actor with a default value*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	FVector ForceToAdd = FVector(0, 0, 5000);
+
+
+	/* The Height of my Sphere starting from the location of the Actor */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	float SphereHeight = 200;
+
+	/* The Radius of the sphere trace */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	float SphereRadius = 500;
+
+	/* Sphere segments - used for visualization only */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	int32 Segments = 100;
+
 	
 };

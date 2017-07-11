@@ -18,7 +18,7 @@ Click [here](http://orfeasel.com) to find out more about
  12 Adding Radial Impulse to Actors
  13 Adding Force to an Actor
  14 Adding Impulse to an Actor
- 15 
+ 15 Tracing multiple objects - SweepMultiByChannel
  16 
  17 
  18 
