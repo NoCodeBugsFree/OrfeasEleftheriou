@@ -9,6 +9,9 @@
 #include "GameFramework/PlayerController.h"
 #include "DrawDebugHelpers.h"
 
+
+#pragma region Template FPS_Character
+
 static FName WeaponFireTraceIdent = FName(TEXT("WeaponTrace"));
 #define COLLISION_WEAPON		ECC_GameTraceChannel1
 
@@ -88,6 +91,15 @@ void AFP_FirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* 
 	PlayerInputComponent->BindAxis("TurnRate", this, &AFP_FirstPersonCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AFP_FirstPersonCharacter::LookUpAtRate);
+
+	/* Templated version of EquipWeapon binding */
+	//We tell the compiler that we pick the EWeaponType::Knife explicitly
+	PlayerInputComponent->BindAction("EquipKnife", IE_Pressed, this, &AFP_FirstPersonCharacter::EquipWeapon<EWeaponType::WT_Knife>);
+	//We tell the compiler that we pick the EWeaponType::Rifle explicitly
+	PlayerInputComponent->BindAction("EquipRifle", IE_Pressed, this, &AFP_FirstPersonCharacter::EquipWeapon<EWeaponType::WT_Rifle>);
+	//We tell the compiler that we pick the EWeaponType::Handgun explicitly
+	PlayerInputComponent->BindAction("EquipHandgun", IE_Pressed, this, &AFP_FirstPersonCharacter::EquipWeapon<EWeaponType::WT_HandGun>);
+
 }
 
 void AFP_FirstPersonCharacter::OnFire()
@@ -266,4 +278,31 @@ void AFP_FirstPersonCharacter::TryEnableTouchscreenMovement(UInputComponent* Pla
 	PlayerInputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AFP_FirstPersonCharacter::BeginTouch);
 	PlayerInputComponent->BindTouch(EInputEvent::IE_Released, this, &AFP_FirstPersonCharacter::EndTouch);
 	PlayerInputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AFP_FirstPersonCharacter::TouchUpdate);	
+}
+
+#pragma endregion
+
+void AFP_FirstPersonCharacter::EquipWeapon(EWeaponType EWeaponToEquip)
+{
+	switch (EWeaponToEquip)
+	{
+		case EWeaponType::WT_Knife:
+		{
+			UE_LOG(LogTemp, Error, TEXT("Equipped knife"));
+			// more logic here
+			break;
+		}
+		case EWeaponType::WT_Rifle:
+		{
+			UE_LOG(LogTemp, Error, TEXT("Equipped rifle"));
+			// more logic here
+			break;
+		}
+		case EWeaponType::WT_HandGun:
+		{
+			UE_LOG(LogTemp, Error, TEXT("Equipped handgun"));
+			// more logic here
+			break;
+		}
+	}
 }
