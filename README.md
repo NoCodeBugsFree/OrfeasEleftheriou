@@ -26,7 +26,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 20 Structs Explanation
 + 21 Inputs with Parameters
 + 22 Construction Script based on C++
-+ 23 
++ 23 Actor Spawning and GetDefaultObject
 + 24
 + 25
 + 26
