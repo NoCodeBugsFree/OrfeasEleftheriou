@@ -25,7 +25,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 19 Casting types in Unreal Engine
 + 20 Structs Explanation
 + 21 Inputs with Parameters
-+ 22
++ 22 Construction Script based on C++
 + 23 
 + 24
 + 25
