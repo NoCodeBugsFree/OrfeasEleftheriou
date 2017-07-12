@@ -27,7 +27,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 21 Inputs with Parameters
 + 22 Construction Script based on C++
 + 23 Actor Spawning and GetDefaultObject
-+ 24
++ 24 Understanding Lambda Expressions
 + 25
 + 26
 + 27
