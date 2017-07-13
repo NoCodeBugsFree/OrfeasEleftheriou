@@ -31,7 +31,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 25 Using Delegates
 + 26 Consuming Timelines using C++
 + 27 Creating AI with Perception
-+ 28 
++ 28 Creating a basic Patrol AI
 + 29 
 + 30
 + 31
