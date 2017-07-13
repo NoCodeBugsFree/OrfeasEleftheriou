@@ -28,7 +28,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 22 Construction Script based on C++
 + 23 Actor Spawning and GetDefaultObject
 + 24 Understanding Lambda Expressions
-+ 25
++ 25 Using Delegates
 + 26
 + 27
 + 28
