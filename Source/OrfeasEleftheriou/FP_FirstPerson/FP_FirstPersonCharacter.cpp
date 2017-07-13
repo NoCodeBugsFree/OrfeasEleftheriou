@@ -268,7 +268,7 @@ FHitResult AFP_FirstPersonCharacter::WeaponTrace(const FVector& StartTrace, cons
 	FHitResult Hit(ForceInit);
 	GetWorld()->LineTraceSingleByChannel(Hit, StartTrace, EndTrace, COLLISION_WEAPON, TraceParams);
 	
-	DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor::Red, true, 10.f, (uint8)0, 10.f);
+	DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor::Red, true, 10.f, (uint8)0, 1.f);
 
 	return Hit;
 }

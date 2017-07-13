@@ -30,8 +30,8 @@ Click [here](http://orfeasel.com) to find out more about
 + 24 Understanding Lambda Expressions
 + 25 Using Delegates
 + 26 Consuming Timelines using C++
-+ 27
-+ 28
++ 27 Creating AI with Perception
++ 28 
 + 29 
 + 30
 + 31
