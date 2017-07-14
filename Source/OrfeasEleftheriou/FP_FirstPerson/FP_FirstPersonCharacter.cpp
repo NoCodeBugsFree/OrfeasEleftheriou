@@ -306,3 +306,37 @@ void AFP_FirstPersonCharacter::EquipWeapon(EWeaponType EWeaponToEquip)
 		}
 	}
 }
+
+#pragma region MultiThreading
+
+void AFP_FirstPersonCharacter::CalculatePrimeNumbers()
+{
+	// Performing the prime numbers calculations in the game thread...
+
+	ThreadingTest::CalculatePrimeNumbers(MaxPrime);
+
+	GLog->Log("--------------------------------------------------------------------");
+	GLog->Log("End of prime numbers calculation on game thread");
+	GLog->Log("--------------------------------------------------------------------");
+
+}
+
+
+void AFP_FirstPersonCharacter::CalculatePrimeNumbersAsync()
+{
+	/*Create a new Task and pass as a parameter our MaxPrime
+	Then, tell that Task to execute in the background.
+
+	The FAutoDeleteAsyncTask will make sure to delete the task when it's finished.
+
+	Multithreading requires cautious handle of the available threads, in order to avoid
+	race conditions and strange bugs that are not easy to solve
+
+	Fortunately, UE4 contains a class (FAutoDeleteAsyncTask) which handles everything by itself
+	and the programmer is able to perform async operations without any real effort.*/
+
+	(new FAutoDeleteAsyncTask<PrimeCalculationAsyncTask>(MaxPrime))->StartBackgroundTask();
+}
+
+#pragma endregion
+

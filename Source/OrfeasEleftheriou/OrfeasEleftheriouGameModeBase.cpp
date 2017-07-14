@@ -32,7 +32,6 @@ void AOrfeasEleftheriouGameModeBase::DoSomething()
 	UE_LOG(LogTemp, Error, TEXT("DoSomething was called . . . "));
 }
 
-
 void AOrfeasEleftheriouGameModeBase::DataTableHandling()
 {
 	// Retrieve the Row based on the Row Name

@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "FP_FirstPersonCharacter.generated.h"
 
+// AsyncWork.h: Definition of queued work classes
+
 class UInputComponent;
 class UCameraComponent;
 class USkeletalMeshComponent;
@@ -28,17 +30,17 @@ class AFP_FirstPersonCharacter : public ACharacter
 
 	GENERATED_BODY()
 
-		/** Pawn mesh: 1st person view (arms; seen only by self) */
-		UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-		USkeletalMeshComponent* Mesh1P;
+	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	USkeletalMeshComponent* Mesh1P;
 
 	/** Gun mesh */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-		USkeletalMeshComponent* FP_Gun;
+	USkeletalMeshComponent* FP_Gun;
 
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		UCameraComponent* FirstPersonCameraComponent;
+	UCameraComponent* FirstPersonCameraComponent;
 
 public:
 
@@ -46,31 +48,31 @@ public:
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-		float BaseTurnRate;
+	float BaseTurnRate;
 
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-		float BaseLookUpRate;
+	float BaseLookUpRate;
 
 	/** Gun muzzle's offset from the characters location */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		FVector GunOffset;
+	FVector GunOffset;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		USoundBase* FireSound;
+	USoundBase* FireSound;
 
 	/** AnimMontage to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		UAnimMontage* FireAnimation;
+	UAnimMontage* FireAnimation;
 
 	/* This is when calculating the trace to determine what the weapon has hit */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		float WeaponRange;
+	float WeaponRange;
 
 	/* This is multiplied by the direction vector when the weapon trace hits something to apply velocity to the component that is hit */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		float WeaponDamage;
+	float WeaponDamage;
 
 protected:
 
@@ -169,7 +171,6 @@ public:
 
 #pragma endregion
 
-
 public:
 	
 	/* This function handles the weapon equipment */
@@ -181,9 +182,80 @@ public:
 	
 protected:
 	
-	
+#pragma region MultiThreading
+
+	/* Calculates prime numbers in the game thread */
+	UFUNCTION(BlueprintCallable, Category = MultiThreading)
+	void CalculatePrimeNumbers();
+
+	/* Calculates prime numbers in a background thread */
+	UFUNCTION(BlueprintCallable, Category = MultiThreading)
+	void CalculatePrimeNumbersAsync();
+
+	/* The max prime number */
+	UPROPERTY(EditAnywhere, Category = MultiThreading)
+	int32 MaxPrime = 500000;
+
+
 	
 private:
 
 };
 
+namespace ThreadingTest
+{
+	static void CalculatePrimeNumbers(int32 UpperLimit)
+	{
+		//Calculating the prime numbers...
+		for (int32 i = 1; i <= UpperLimit; i++)
+		{
+			bool isPrime = true;
+
+			for (int32 j = 2; j <= i / 2; j++)
+			{
+				if (FMath::Fmod(i, j) == 0)
+				{
+					isPrime = false;
+					break;
+				}
+			}
+
+			if (isPrime) GLog->Log("Prime number #" + FString::FromInt(i) + ": " + FString::FromInt(i));
+		}
+	}
+}
+
+/* PrimeCalculateAsyncTask is the name of our task
+FNonAbandonableTask is the name of the class I've located from the source code of the engine */
+class PrimeCalculationAsyncTask : public FNonAbandonableTask
+{
+	int32 MaxPrime;
+
+public:
+
+	/* Default constructor */
+	PrimeCalculationAsyncTask(int32 MaxPrime)
+	{
+		this->MaxPrime = MaxPrime;
+	}
+
+	/* This function is needed from the API of the engine.
+	My guess is that it provides necessary information
+	about the thread that we occupy and the progress of our task */
+	FORCEINLINE TStatId GetStatId() const
+	{
+		RETURN_QUICK_DECLARE_CYCLE_STAT(PrimeCalculationAsyncTask, STATGROUP_ThreadPoolAsyncTasks);
+	}
+
+	/* This function is executed when we tell our task to execute */
+	void DoWork()
+	{
+		ThreadingTest::CalculatePrimeNumbers(MaxPrime);
+
+		GLog->Log("--------------------------------------------------------------------");
+		GLog->Log("End of prime numbers calculation on background thread");
+		GLog->Log("--------------------------------------------------------------------");
+	}
+};
+
+#pragma endregion
