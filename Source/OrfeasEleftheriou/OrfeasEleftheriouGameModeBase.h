@@ -62,6 +62,24 @@ protected:
 
 private:
 
+#pragma region ConsoleComands
+
+	/*Function with no parameters*/
+	UFUNCTION(Exec, Category = ExecFunctions)
+	void Do();
+
+	/*Function with one parameter*/
+	UFUNCTION(Exec, Category = ExecFunctions)
+	void DoElse(float param);
+
+	/*Function with two parameters*/
+	UFUNCTION(Exec, Category = ExecFunctions)
+	void DoubleParamFunction(float param1, int32 param2);
+
+#pragma endregion
+
+#pragma region DataTable
+
 	/** Data table that represents all stats in this game  */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	class UDataTable* StatsDB;
@@ -78,4 +96,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	float Health = 10.f;
 	
+#pragma endregion
+
 };

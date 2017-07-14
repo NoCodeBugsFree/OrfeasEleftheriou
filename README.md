@@ -34,7 +34,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 28 Creating a basic Patrol AI
 + 29 Consuming Data Tables
 + 30 Generating Hit Events
-+ 31
++ 31 Creating console commands
 + 32 
 + 33 
 + 34

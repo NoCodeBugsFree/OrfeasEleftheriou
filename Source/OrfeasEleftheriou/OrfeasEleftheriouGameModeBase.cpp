@@ -32,6 +32,7 @@ void AOrfeasEleftheriouGameModeBase::DoSomething()
 	UE_LOG(LogTemp, Error, TEXT("DoSomething was called . . . "));
 }
 
+
 void AOrfeasEleftheriouGameModeBase::DataTableHandling()
 {
 	// Retrieve the Row based on the Row Name
@@ -79,5 +80,20 @@ void AOrfeasEleftheriouGameModeBase::DataTableHandling()
 			}
 		}
 	}
+}
+
+void AOrfeasEleftheriouGameModeBase::Do()
+{
+	UE_LOG(LogTemp, Error, TEXT("Do called ."));
+}
+
+void AOrfeasEleftheriouGameModeBase::DoubleParamFunction(float param1, int32 param2)
+{
+	UE_LOG(LogTemp, Error, TEXT("DoubleParamFunction p1 : %f  p2 : %d"), param1, param2);
+}
+
+void AOrfeasEleftheriouGameModeBase::DoElse(float param)
+{
+	UE_LOG(LogTemp, Error, TEXT("DoSomethingElse : param : %f"), param);
 }
 
