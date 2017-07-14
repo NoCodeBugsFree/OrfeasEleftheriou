@@ -22,12 +22,7 @@ public:
 	FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
 	/** Returns  Bot Target Points array */
 	FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return BotTargetPoints; }
-
-
-protected:
-
-
-
+	
 private:
 	
 	/*Behavior tree comp ref*/

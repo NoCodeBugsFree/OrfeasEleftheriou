@@ -32,7 +32,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 26 Consuming Timelines using C++
 + 27 Creating AI with Perception
 + 28 Creating a basic Patrol AI
-+ 29 
++ 29 Consuming Data Tables
 + 30
 + 31
 + 32 

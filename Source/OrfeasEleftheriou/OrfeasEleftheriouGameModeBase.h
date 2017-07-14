@@ -53,6 +53,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AAA")
 	void DoSomething();
 
+	/** Retrieves data from DataTable */
+	void DataTableHandling();
+
 protected:
 
 
@@ -64,7 +67,13 @@ private:
 	class UDataTable* StatsDB;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
-	FPlayerStats Stats;
+	FPlayerStats OnePlayerStat;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	TArray<FPlayerStats> ArrayOfPlayerStats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	TArray<FPlayerStats> LoopArrayOfPlayerStats;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
 	float Health = 10.f;
