@@ -33,7 +33,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 27 Creating AI with Perception
 + 28 Creating a basic Patrol AI
 + 29 Consuming Data Tables
-+ 30
++ 30 Generating Hit Events
 + 31
 + 32 
 + 33 
