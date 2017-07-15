@@ -100,6 +100,47 @@ void AFP_FirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* 
 	//We tell the compiler that we pick the EWeaponType::Handgun explicitly
 	PlayerInputComponent->BindAction("EquipHandgun", IE_Pressed, this, &AFP_FirstPersonCharacter::EquipWeapon<EWeaponType::WT_HandGun>);
 
+	// -----------------------------------------------------------------------------------
+	// ------- Implementing Action Bindings with parameters ------------------------------
+	// -----------------------------------------------------------------------------------
+
+	// First param action binding...
+
+	// Declaring an action binding
+	FInputActionBinding ActionBindingOneParam;
+	// Specifying the associated action name and the key event
+	ActionBindingOneParam.ActionName = FName("OneParamInput");
+	ActionBindingOneParam.KeyEvent = IE_Pressed;
+
+	// Creating a handler which binds to the given function with a fixed int parameter
+	FInputActionHandlerSignature OneParamActionHandler;
+
+	// Binding the function named OneParamFunction to our handler
+	// The first parameter (this) means that the handler will search the given function inside the current class
+	OneParamActionHandler.BindUFunction(this, FName("OneParamFunction"), FirstIntParam);
+
+	// Associating our action binding with our new delegate
+	ActionBindingOneParam.ActionDelegate = OneParamActionHandler;
+
+	// Performing the actual binding...
+	InputComponent->AddActionBinding(ActionBindingOneParam);
+
+	// Second Param - identical code to the first param action bind but with a different function and parameters!
+
+	FInputActionBinding ActionBindingTwoParams;
+
+	ActionBindingTwoParams.ActionName = FName("TwoParamsInput");
+	ActionBindingTwoParams.KeyEvent = IE_Pressed;
+
+	FInputActionHandlerSignature TwoParamsActionHandler;
+	TwoParamsActionHandler.BindUFunction(this, FName("TwoParamsFunction"), SecondIntParam, FloatParam);
+
+	ActionBindingTwoParams.ActionDelegate = TwoParamsActionHandler;
+
+	InputComponent->AddActionBinding(ActionBindingTwoParams);
+
+	// Binding the change parameters function
+	InputComponent->BindAction("ChangeParameters", IE_Pressed, this, &AFP_FirstPersonCharacter::ChangeParameters);
 }
 
 void AFP_FirstPersonCharacter::OnFire()
@@ -340,3 +381,52 @@ void AFP_FirstPersonCharacter::CalculatePrimeNumbersAsync()
 
 #pragma endregion
 
+void AFP_FirstPersonCharacter::OneParamFunction(int32 Param)
+{
+	//printing the given parameter
+	GLog->Log("The parameter you've entered:" + FString::FromInt(Param));
+}
+
+void AFP_FirstPersonCharacter::TwoParamsFunction(int32 IntParam, float FloatParameter)
+{
+	//printing the given parameters
+	GLog->Log("Input with two parameters. First param: " + FString::FromInt(IntParam) + " Second param: " + FString::SanitizeFloat(FloatParam));
+}
+
+void AFP_FirstPersonCharacter::ChangeParameters()
+{
+	//Choosing a different random param!
+	SecondIntParam = FMath::Rand();
+
+	FloatParam = FMath::RandRange(-1000.f, 1000.f);
+
+	GLog->Log("Changed params: " + FString::FromInt(SecondIntParam) + " " + FString::SanitizeFloat(FloatParam));
+
+
+	//Search all the action bindings until we find the binding with the two parameters
+	for (int32 i = 0; i < InputComponent->GetNumActionBindings() - 1; i++)
+	{
+		if (InputComponent->GetActionBinding(i).ActionName.IsEqual("TwoParamsInput"))
+		{
+			//Declaring a new binding with the same action name and key event as the TwoParamsInput initial action binding
+			FInputActionBinding NewActionBinding;
+			NewActionBinding.ActionName = FName("TwoParamsInput");
+			NewActionBinding.KeyEvent = IE_Pressed;
+
+			//Creating an identical handler with the same bind as before
+			FInputActionHandlerSignature NewDelegate;
+			//However, this bind contains our new values!
+			NewDelegate.BindUFunction(this, FName("TwoParamsFunction"), SecondIntParam, FloatParam);
+
+			//Associating our handler with our action binding
+			NewActionBinding.ActionDelegate = NewDelegate;
+
+			//The GetActionBinding function returns the action binding by reference
+			//This means that in the following line we replace the old binding (which contains old values)
+			//with a new binding (which contains the updated values)
+			InputComponent->GetActionBinding(i) = NewActionBinding;
+
+			GLog->Log("changed the action binding");
+		}
+	}
+}

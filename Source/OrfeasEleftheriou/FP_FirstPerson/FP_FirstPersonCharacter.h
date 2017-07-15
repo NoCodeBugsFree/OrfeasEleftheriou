@@ -26,6 +26,43 @@ UCLASS(config=Game)
 class AFP_FirstPersonCharacter : public ACharacter
 {
 
+#pragma region Action Bindings With Parameters
+
+public:
+
+
+
+protected:
+
+	/* The parameter which we will pass into the OneParamFunction */
+	UPROPERTY(EditDefaultsOnly, Category = InputsWithParameters)
+	int32 FirstIntParam = 50;
+
+	/* The int parameter that will get passed into the TwoParamsFunction */
+	UPROPERTY(EditDefaultsOnly, Category = InputsWithParameters)
+	int32 SecondIntParam = 12345;
+
+	/* The float parameter that will get passed into the TwoParamsFunction */
+	UPROPERTY(EditDefaultsOnly, Category = InputsWithParameters)
+	float FloatParam = 123.400002;
+
+
+private:
+
+	/* A simple function which prints its parameter */
+	UFUNCTION()
+	void OneParamFunction(int32 Param);
+
+	/* A simple function which prints its parameters */
+	UFUNCTION()
+	void TwoParamsFunction(int32 IntParam, float FloatParameter);
+
+	/* A function that changes the our parameters and replaces a hardcoded action bind */
+	void ChangeParameters();
+
+#pragma endregion
+
+
 #pragma region Template FPS_Character
 
 	GENERATED_BODY()

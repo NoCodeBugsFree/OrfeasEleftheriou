@@ -37,7 +37,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 31 Creating console commands
 + 32 Creating Interface classes in UE4 using C++ (simple interface)
 + 33 Implementing Multithreading in UE4
-+ 34
++ 34 Implementing Action Bindings with parameters
 + 35 
 + 36
 + 37
