@@ -39,19 +39,28 @@ Click [here](http://orfeasel.com) to find out more about
 + 33 Implementing Multithreading in UE4
 + 34 Implementing Action Bindings with parameters
 + 35 Implementing a basic Dialog System in C++
-+ 36
-+ 37
-+ 38
-+ 39
-+ 40
-+
-+
-+
-+
-+
-+
-+
-+
-
-+
-+
++ 36 
++ 37 
++ 38 
++ 39 
++ 40 
++ 41
++ 42 
++ 43 
++ 44
++ 45
++ 46
++ 47
++ 48
++ 49
++ 50
++ 51
++ 52
++ 53
++ 54
++ 55
++ 56
++ 57
++ 58
++ 59
++ 60

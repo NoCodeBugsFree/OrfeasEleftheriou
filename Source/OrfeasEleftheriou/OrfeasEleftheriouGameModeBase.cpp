@@ -5,7 +5,6 @@
 AOrfeasEleftheriouGameModeBase::AOrfeasEleftheriouGameModeBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	
 }
 
 void AOrfeasEleftheriouGameModeBase::BeginPlay()
