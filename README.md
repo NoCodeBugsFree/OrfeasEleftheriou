@@ -38,7 +38,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 32 Creating Interface classes in UE4 using C++ (simple interface)
 + 33 Implementing Multithreading in UE4
 + 34 Implementing Action Bindings with parameters
-+ 35 
++ 35 Implementing a basic Dialog System in C++
 + 36
 + 37
 + 38
