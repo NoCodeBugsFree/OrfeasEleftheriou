@@ -39,8 +39,8 @@ Click [here](http://orfeasel.com) to find out more about
 + 33 Implementing Multithreading in UE4
 + 34 Implementing Action Bindings with parameters
 + 35 Implementing a basic Dialog System in C++
-+ 36 
-+ 37 
++ 36 Implementing a Melee Combo System in C++
++ 37 Handling animations in C++  -- NEXT --
 + 38 
 + 39 
 + 40 

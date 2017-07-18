@@ -88,24 +88,24 @@ void ATP_ThirdPersonCharacter::SetupPlayerInputComponent(class UInputComponent* 
 
 void ATP_ThirdPersonCharacter::GeneratePlayerLines(UDataTable& PlayerLines)
 {
-	//Get all the row names of the table
+	// Get all the row names of the table
 	if (PlayerLines.IsValidLowLevel())
 	{
 		TArray<FName> PlayerOptions = PlayerLines.GetRowNames();
-		//For each row name try to retrieve the contents of the table
+		// For each row name try to retrieve the contents of the table
 		for (auto It : PlayerOptions)
 		{
-			//Retrieve the contents of the table
+			// Retrieve the contents of the table
 			FDialog* Dialog = RetrieveDialog(&PlayerLines, It);
 
 			if (Dialog)
 			{
-				//We retrieved a valid row - populate the questions array with our excerpts
+				// We retrieved a valid row - populate the questions array with our excerpts
 				Questions.Add(Dialog->QuestionExcerpt);
 			}
 		}
 
-		//Make sure to create a reference of the available line for later use
+		// Make sure to create a reference of the available line for later use
 		AvailableLines = &PlayerLines;
 	} 
 	else
@@ -185,7 +185,7 @@ FDialog* ATP_ThirdPersonCharacter::RetrieveDialog(UDataTable* TableToSearch, FNa
 {
 	if (!TableToSearch) return nullptr;
 
-	//The table is valid - retrieve the given row if possible
+	// The table is valid - retrieve the given row if possible
 	FString ContextString;
 	return TableToSearch->FindRow<FDialog>(RowName, ContextString);
 }
