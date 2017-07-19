@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MyAnimInstance.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 void UMyAnimInstance::Attack()
 {
@@ -32,6 +33,7 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (TestPawn)
 	{
 		MovementSpeed = TestPawn->GetVelocity().Size();
+		bIsFalling = TestPawn->GetMovementComponent()->IsFalling();
 	}
 
 	/** Disable 2nd and 3rd attack animations if montage is not playing  */

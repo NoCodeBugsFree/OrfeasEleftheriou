@@ -28,6 +28,10 @@ public:
 	
 protected:
 
+	/* True means that we're currently in air - or falling */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bIsFalling;
+
 	/* Holds a reference to the character's movement speed */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float MovementSpeed;
