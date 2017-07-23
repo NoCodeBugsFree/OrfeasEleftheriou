@@ -8,12 +8,11 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "DrawDebugHelpers.h"
-
-
-#pragma region Template FPS_Character
+#include "Inventory/Pickup.h"
+#include "Inventory/InventoryPlayerController.h"
 
 static FName WeaponFireTraceIdent = FName(TEXT("WeaponTrace"));
-#define COLLISION_WEAPON		ECC_GameTraceChannel1
+#define COLLISION_WEAPON ECC_GameTraceChannel1
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -22,6 +21,8 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
 AFP_FirstPersonCharacter::AFP_FirstPersonCharacter()
 {
+	PrimaryActorTick.bCanEverTick = true;
+	
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
@@ -58,6 +59,68 @@ AFP_FirstPersonCharacter::AFP_FirstPersonCharacter()
 
 	// Note: The ProjectileClass and the skeletal mesh/anim blueprints for Mesh1P are set in the
 	// derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+}
+
+
+void AFP_FirstPersonCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	/** Initializing our Inventory  */
+	Inventory.SetNum(MAX_INVENTORY_ITEMS);
+}
+
+void AFP_FirstPersonCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	Raycast();
+}
+
+void AFP_FirstPersonCharacter::SetEquippedItem(UTexture2D* Texture)
+{
+	if (Texture)
+	{
+		// For this scenario we make the assumption that
+		// every pickup has a unique texture.
+		// So, in order to set the equipped item we just check every item
+		// inside our Inventory. Once we find an item that has the same image as the
+		// Texture image we're passing as a parameter we mark that item as CurrentlyEquipped.
+		for (auto It = Inventory.CreateIterator(); It; It++)
+		{
+			if ((*It) && (*It)->GetPickupTexture() && (*It)->GetPickupTexture()->HasSameSourceArt(Texture))
+			{
+				CurrentlyEquippedItem = *It;
+				UE_LOG(LogTemp, Error, TEXT("I've set a new equipped item: %s"), *CurrentlyEquippedItem->GetName());
+				break;
+			}
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("The Player has clicked an empty inventory slot"));
+	}
+}
+
+void AFP_FirstPersonCharacter::PickupItem()
+{
+	if (LastItemSeen)
+	{
+		// Find the first available slot
+		int32 AvailableSlot = Inventory.Find(nullptr);
+
+		if (AvailableSlot != INDEX_NONE)
+		{
+			// Add the item to the first valid slot we found
+			Inventory[AvailableSlot] = LastItemSeen;
+			// Destroy the item from the game
+			LastItemSeen->Destroy();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("You can't carry any more items!"));
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -99,6 +162,28 @@ void AFP_FirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* 
 	PlayerInputComponent->BindAction("EquipRifle", IE_Pressed, this, &AFP_FirstPersonCharacter::EquipWeapon<EWeaponType::WT_Rifle>);
 	//We tell the compiler that we pick the EWeaponType::Handgun explicitly
 	PlayerInputComponent->BindAction("EquipHandgun", IE_Pressed, this, &AFP_FirstPersonCharacter::EquipWeapon<EWeaponType::WT_HandGun>);
+
+	/** Pickup  */
+	PlayerInputComponent->BindAction("Pickup", IE_Pressed, this, &AFP_FirstPersonCharacter::PickupItem);
+	
+	// DropItem
+	PlayerInputComponent->BindAction("DropItem", IE_Pressed, this, &AFP_FirstPersonCharacter::DropEquippedItem);
+
+	/** Inventory  */
+	// old inventory binding
+	// PlayerInputComponent->BindAction("Inventory", IE_Pressed, this, &AFP_FirstPersonCharacter::HandleInventoryInput);
+	
+	// Pause inventory binding 
+	FInputActionBinding InventoryBinding;
+	//We need this bind to execute on pause state
+	InventoryBinding.bExecuteWhenPaused = true;
+	InventoryBinding.ActionDelegate.BindDelegate(this, FName("HandleInventoryInput"));
+	InventoryBinding.ActionName = FName("Inventory");
+	InventoryBinding.KeyEvent = IE_Pressed;
+
+	//Binding the Inventory action
+	InputComponent->AddActionBinding(InventoryBinding);
+
 
 	// -----------------------------------------------------------------------------------
 	// ------- Implementing Action Bindings with parameters ------------------------------
@@ -321,8 +406,6 @@ void AFP_FirstPersonCharacter::TryEnableTouchscreenMovement(UInputComponent* Pla
 	PlayerInputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AFP_FirstPersonCharacter::TouchUpdate);	
 }
 
-#pragma endregion
-
 void AFP_FirstPersonCharacter::EquipWeapon(EWeaponType EWeaponToEquip)
 {
 	switch (EWeaponToEquip)
@@ -348,8 +431,6 @@ void AFP_FirstPersonCharacter::EquipWeapon(EWeaponType EWeaponToEquip)
 	}
 }
 
-#pragma region MultiThreading
-
 void AFP_FirstPersonCharacter::CalculatePrimeNumbers()
 {
 	// Performing the prime numbers calculations in the game thread...
@@ -361,7 +442,6 @@ void AFP_FirstPersonCharacter::CalculatePrimeNumbers()
 	GLog->Log("--------------------------------------------------------------------");
 
 }
-
 
 void AFP_FirstPersonCharacter::CalculatePrimeNumbersAsync()
 {
@@ -379,7 +459,75 @@ void AFP_FirstPersonCharacter::CalculatePrimeNumbersAsync()
 	(new FAutoDeleteAsyncTask<PrimeCalculationAsyncTask>(MaxPrime))->StartBackgroundTask();
 }
 
-#pragma endregion
+void AFP_FirstPersonCharacter::DropEquippedItem()
+{
+	if (CurrentlyEquippedItem)
+	{
+		int32 IndexOfItem;
+		if (Inventory.Find(CurrentlyEquippedItem, IndexOfItem))
+		{
+			// The location of the drop
+			FVector DropLocation = GetActorLocation() + (GetActorForwardVector() * 200);
+
+			// Making a transform with default rotation and scale. Just setting up the location
+			// that was calculated above
+			FTransform Transform; Transform.SetLocation(DropLocation);
+
+			//Default actor spawn parameters
+			FActorSpawnParameters SpawnParams;
+
+			//Spawning our pickup
+			APickup* PickupToSpawn = GetWorld()->SpawnActor<APickup>(CurrentlyEquippedItem->GetClass(), Transform, SpawnParams);
+			
+			if (PickupToSpawn)
+			{
+				// Unreference the item we've just placed
+				Inventory[IndexOfItem] = nullptr;
+			}
+		}
+	}
+}
+
+void AFP_FirstPersonCharacter::Raycast()
+{
+	// Calculating start and end location
+	FVector StartLocation = FirstPersonCameraComponent->GetComponentLocation();
+	FVector EndLocation = StartLocation + (FirstPersonCameraComponent->GetForwardVector() * RaycastRange);
+
+	FHitResult RaycastHit;
+
+	// Raycast should ignore the character
+	FCollisionQueryParams CQP;
+	CQP.AddIgnoredActor(this);
+
+	// Raycast
+	GetWorld()->LineTraceSingleByChannel(RaycastHit, StartLocation, EndLocation, ECollisionChannel::ECC_WorldDynamic, CQP);
+	
+	APickup* Pickup = Cast<APickup>(RaycastHit.GetActor());
+
+	if (LastItemSeen && LastItemSeen != Pickup)
+	{
+		// If our character sees a different pickup then disable the glowing effect on the previous seen item
+		LastItemSeen->SetGlowEffect(false);
+	}
+
+	if (Pickup)
+	{
+		// Enable the glow effect on the current item
+		LastItemSeen = Pickup;
+		Pickup->SetGlowEffect(true);
+	} // Re-Initialize 
+	else LastItemSeen = nullptr;
+}
+
+void AFP_FirstPersonCharacter::HandleInventoryInput()
+{
+	AInventoryPlayerController* InventoryPlayerController = Cast<AInventoryPlayerController>(GetController());
+	if (InventoryPlayerController)
+	{
+		InventoryPlayerController->HandleInventoryInput();
+	}
+}
 
 void AFP_FirstPersonCharacter::OneParamFunction(int32 Param)
 {

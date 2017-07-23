@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "FP_FirstPersonCharacter.generated.h"
 
+#define MAX_INVENTORY_ITEMS 4
+
 // AsyncWork.h: Definition of queued work classes
 
 class UInputComponent;
@@ -13,6 +15,7 @@ class UCameraComponent;
 class USkeletalMeshComponent;
 class USoundBase;
 class UAnimMontage;
+class APickup;
 
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
@@ -48,6 +51,10 @@ protected:
 
 
 private:
+
+	/* Handles the Inventory Input by sending information to the controller */
+	UFUNCTION()
+	void HandleInventoryInput();
 
 	/* A simple function which prints its parameter */
 	UFUNCTION()
@@ -216,10 +223,10 @@ public:
 	/* Templated version of EquipWeapon which calls the above function */
 	template<EWeaponType EWeaponToEquip>
 	void EquipWeapon() { EquipWeapon(EWeaponToEquip); }
-	
-protected:
-	
+		
 #pragma region MultiThreading
+
+protected:
 
 	/* Calculates prime numbers in the game thread */
 	UFUNCTION(BlueprintCallable, Category = MultiThreading)
@@ -233,11 +240,59 @@ protected:
 	UPROPERTY(EditAnywhere, Category = MultiThreading)
 	int32 MaxPrime = 500000;
 
-
+#pragma endregion
 	
+#pragma region Inventory
+
+public:
+
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
+
+	/** Returns the inventory  */
+	UFUNCTION(BlueprintCallable, Category = "AAA")
+	TArray<APickup*> GetInventory() const { return Inventory; }
+
+	/* Sets a new equipped item based on the given texture */
+	void SetEquippedItem(UTexture2D* Texture);
+
+protected:
+
+	/* The range of the raycast */
+	UPROPERTY(EditAnywhere)
+	float RaycastRange = 250.f;
+
+	/* Handles the Pickup Input */
+	UFUNCTION()
+	void PickupItem();
+
+	/* The actual Inventory */
+	UPROPERTY(VisibleAnywhere)
+	TArray<APickup*> Inventory;
+
 private:
 
+	/* Drops the currently equipped item */
+	UFUNCTION()
+	void DropEquippedItem();
+
+	/* Raycasts in front of the character to find usable items */
+	void Raycast();
+
+	/* Reference to the last seen pickup item. Nullptr if none */
+	UPROPERTY()
+	APickup* LastItemSeen;
+
+	/* Reference to the currently equipped item */
+	UPROPERTY()
+	APickup* CurrentlyEquippedItem;
+
+#pragma endregion
+
 };
+
+#pragma region MultiThreading2
 
 namespace ThreadingTest
 {

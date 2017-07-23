@@ -41,7 +41,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 35 Implementing a basic Dialog System in C++
 + 36 Implementing a Melee Combo System in C++
 + 37 Handling animations in C++
-+ 38 
++ 38 Implementing an Inventory System in C++
 + 39 
 + 40 
 + 41
