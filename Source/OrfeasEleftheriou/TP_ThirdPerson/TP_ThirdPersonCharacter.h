@@ -78,20 +78,21 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 #pragma endregion
 
+#pragma region Dialog
 
 public:
-	
+
 	/* Generates the player lines */
 	void GeneratePlayerLines(class UDataTable& PlayerLines);
-	
+
 	/*This array is essentially an Array of Excerpts from our dialogs!*/
 	UPROPERTY(BlueprintReadOnly)
-	TArray<FString> Questions;
+		TArray<FString> Questions;
 
 	/*Performs the actual talking - informs the associated pawn if necessary in order to answer
 	The subtitles array contain all the subtitles for this talk - it should be passed to our UI*/
 	UFUNCTION(BlueprintCallable, Category = "AAA")
-	void Talk(FString Excerpt, TArray<struct FSubtitle>& Subtitles);
+		void Talk(FString Excerpt, TArray<struct FSubtitle>& Subtitles);
 
 	/*Enables / disables our talk ability. The player can't talk if he's not in a valid range*/
 	void SetTalkRangeStatus(bool Status) { bIsInTalkRange = Status; }
@@ -101,21 +102,21 @@ public:
 
 	/*Retrieves the UI reference*/
 	class UDialogUI* GetUI() { return UI; }
-	
+
 protected:
-	
+
 	/*The component responsible for playing our SFX*/
 	UPROPERTY(VisibleAnywhere)
-	class UAudioComponent* AudioComp;
+		class UAudioComponent* AudioComp;
 
 	/*Opens or closes the conversation UI*/
 	UFUNCTION(BlueprintImplementableEvent, Category = "AAA")
-	void ToggleUI();
+		void ToggleUI();
 
 	/*UI Reference*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	class UDialogUI* UI;
-	
+		class UDialogUI* UI;
+
 private:
 
 	/*True if the player is currently talking with any pawn*/
@@ -129,13 +130,44 @@ private:
 
 	/*The pawn that the player is currently talking to*/
 	UPROPERTY()
-	class ADialogAICharacter* AssociatedPawn;
+		class ADialogAICharacter* AssociatedPawn;
 
 	/*A reference to our lines - retrieved from the associated pawn*/
 	class UDataTable* AvailableLines;
 
 	/*Searches in the given row inside the specified table*/
 	FDialog* RetrieveDialog(UDataTable* TableToSearch, FName RowName);
+
+
+#pragma endregion
+
+#pragma region AIHearing
+
+public:
+
+	/* The function that is going to play the sound and report it to our game */
+	UFUNCTION(BlueprintCallable, Category = AI)
+	void ReportNoise();
+
+	/* A Pawn Noise Emitter component which is used in order to emit the sounds to nearby AIs */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	class UPawnNoiseEmitterComponent* PawnNoiseEmitterComp;
+
+protected:
+
+
+
+private:
+
+	/** Volume multiplier  */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	float Volume = 1.f;
+
+	/** Footstep sound  */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AAA", meta = (AllowPrivateAccess = "true"))
+	class USoundBase* FootstepSoundToPlay;
+
+#pragma endregion
 
 };
 

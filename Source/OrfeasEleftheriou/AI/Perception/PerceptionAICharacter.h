@@ -16,11 +16,11 @@ public:
 	// Sets default values for this character's properties
 	APerceptionAICharacter();
 
-	/*The Component which is used for the "seeing" sense of the AI*/
+	/* The Component which is used for the "seeing" sense of the AI */
 	UPROPERTY(VisibleAnywhere, Category = "AI")
 	class UPawnSensingComponent* PawnSensingComp;
 
-	/*The Behavior Tree of the Character*/
+	/* The Behavior Tree of the Character */
 	UPROPERTY(EditAnywhere, Category = "AI")
 	class UBehaviorTree* BehaviorTree;
 
@@ -38,7 +38,12 @@ protected:
 
 private:
 
+	/** Calls every time when this character see the player  */
 	UFUNCTION()
 	void OnSeePlayer(APawn* Pawn);
+
+	/* Hearing function - will be executed when we hear a Pawn */
+	UFUNCTION()
+	void OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume);
 	
 };

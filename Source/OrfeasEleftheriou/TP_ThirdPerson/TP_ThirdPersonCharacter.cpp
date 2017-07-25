@@ -9,6 +9,8 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "DialogAICharacter.h"
+#include "Components/PawnNoiseEmitterComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ATP_ThirdPersonCharacter
@@ -47,12 +49,16 @@ ATP_ThirdPersonCharacter::ATP_ThirdPersonCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 	
+	/** Dialog  */
 	bIsTalking = false;
 	bIsInTalkRange = false;
 	AssociatedPawn = nullptr;
 
 	AudioComp = CreateDefaultSubobject<UAudioComponent>(FName("AudioComp"));
 	AudioComp->SetupAttachment(RootComponent);
+
+	/** AI Hearing  */
+	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -188,6 +194,22 @@ FDialog* ATP_ThirdPersonCharacter::RetrieveDialog(UDataTable* TableToSearch, FNa
 	// The table is valid - retrieve the given row if possible
 	FString ContextString;
 	return TableToSearch->FindRow<FDialog>(RowName, ContextString);
+}
+
+void ATP_ThirdPersonCharacter::ReportNoise()
+{
+	// if we have a valid sound to play, play the sound and
+	// report it to our game
+	if (FootstepSoundToPlay)
+	{
+		// Play the actual sound
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), FootstepSoundToPlay, GetActorLocation(), Volume);
+
+		// Report that we've played a sound with a certain volume in a specific location
+		MakeNoise(Volume, this, GetActorLocation());
+
+		// PawnNoiseEmitterComp->MakeNoise(this, Volume, GetActorLocation());
+	}
 }
 
 void ATP_ThirdPersonCharacter::OnResetVR()

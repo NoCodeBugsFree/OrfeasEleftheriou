@@ -22,20 +22,28 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName BlackboardKey = "Target";
 
-	/* Executes right when the controller possess a Pawn */
-	virtual void Possess(APawn* Pawn) override;
-
+	/* This property is used to find a certain key for our blackboard.
+	We will create the blackboard later in this tutorial*/
+	UPROPERTY(EditDefaultsOnly)
+	FName TargetKey = "SensedPawn";
+	
 	/* Sets the sensed target in the blackboard */
 	void SetSeenTarget(APawn* Pawn);
 
+	/* Sets the new sensed target value inside our Blackboard values */
+	void SetSensedTarget(APawn* NewTarget);
+
 private:	
+
+	/* Executes right when the controller possess a Pawn */
+	virtual void Possess(APawn* Pawn) override;
 	
-	/*Behavior Tree component reference*/
+	/* Behavior Tree component reference */
 	UPROPERTY()
-	class UBehaviorTreeComponent* BehaviorComp;
+	class UBehaviorTreeComponent* BehaviorTreeComponent;
 
 	UPROPERTY()
-	/*Blackboard comp ref*/
-	class UBlackboardComponent* BlackboardComp;
+	/* Blackboard comp ref */
+	class UBlackboardComponent* BlackboardComponent;
 	
 };

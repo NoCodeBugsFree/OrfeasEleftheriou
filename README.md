@@ -42,7 +42,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 36 Implementing a Melee Combo System in C++
 + 37 Handling animations in C++
 + 38 Implementing an Inventory System in C++
-+ 39 
++ 39 Implementing AI Hearing using C++
 + 40 
 + 41
 + 42 
