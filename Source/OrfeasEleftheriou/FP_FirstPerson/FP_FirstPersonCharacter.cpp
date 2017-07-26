@@ -61,7 +61,6 @@ AFP_FirstPersonCharacter::AFP_FirstPersonCharacter()
 	// derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
 
-
 void AFP_FirstPersonCharacter::BeginPlay()
 {
 	Super::BeginPlay();

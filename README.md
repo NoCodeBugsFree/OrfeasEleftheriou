@@ -43,7 +43,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 37 Handling animations in C++
 + 38 Implementing an Inventory System in C++
 + 39 Implementing AI Hearing using C++
-+ 40 
++ 40 Using Unreal Motion Graphics (UMG) with C++
 + 41
 + 42 
 + 43 
