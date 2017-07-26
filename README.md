@@ -45,7 +45,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 39 Implementing AI Hearing using C++
 + 40 Using Unreal Motion Graphics (UMG) with C++
 + 41 Creating EQS Contexts in C++
-+ 42 
++ 42 Creating Custom EQS Generators in C++
 + 43 
 + 44
 + 45
