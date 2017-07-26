@@ -46,7 +46,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 40 Using Unreal Motion Graphics (UMG) with C++
 + 41 Creating EQS Contexts in C++
 + 42 Creating Custom EQS Generators in C++
-+ 43 
++ 43 Creating Flight Paths using Splines
 + 44
 + 45
 + 46
