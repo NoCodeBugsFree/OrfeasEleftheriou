@@ -44,7 +44,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 38 Implementing an Inventory System in C++
 + 39 Implementing AI Hearing using C++
 + 40 Using Unreal Motion Graphics (UMG) with C++
-+ 41
++ 41 Creating EQS Contexts in C++
 + 42 
 + 43 
 + 44

@@ -29,7 +29,7 @@ public:
 	
 	/* Sets the sensed target in the blackboard */
 	void SetSeenTarget(APawn* Pawn);
-
+	
 	/* Sets the new sensed target value inside our Blackboard values */
 	void SetSensedTarget(APawn* NewTarget);
 
