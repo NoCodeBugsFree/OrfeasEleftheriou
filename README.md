@@ -48,7 +48,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 42 Creating Custom EQS Generators in C++
 + 43 Creating Flight Paths using Splines
 + 44 Recreating Sniper Elite’s killshot cameras
-+ 45
++ 45 Creating a C++ Level Blueprint
 + 46
 + 47
 + 48
