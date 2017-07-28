@@ -118,6 +118,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	float WeaponDamage;
 
+	/** Handles moving forward/backward */
+	void MoveForward(float Val);
+
+	/** Handles strafing movement, left and right */
+	void MoveRight(float Val);
+
 protected:
 
 	/** Handler for a touch input beginning. */
@@ -125,13 +131,7 @@ protected:
 
 	/** Fires a virtual projectile. */
 	void OnFire();
-
-	/** Handles moving forward/backward */
-	void MoveForward(float Val);
-
-	/** Handles strafing movement, left and right */
-	void MoveRight(float Val);
-
+	
 	/**
 	* Called via input to turn at a given rate.
 	* @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
@@ -156,7 +156,7 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
-
+	
 	/** Structure that handles touch data so we can process the various stages of touch. */
 	struct TouchData
 	{
@@ -209,6 +209,10 @@ public:
 
 	/** Returns Mesh1P subobject **/
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
+
+	/** Returns Mesh1P subobject **/
+	FORCEINLINE class USkeletalMeshComponent* GetFP_GunMesh() const { return FP_Gun; }
+
 	/** Returns FirstPersonCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 

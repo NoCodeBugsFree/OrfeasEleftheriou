@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "MyDialogStructs.h"
 #include "DialogAICharacter.generated.h"
 
 UCLASS()

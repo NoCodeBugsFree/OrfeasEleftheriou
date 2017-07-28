@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "OrfeasEleftheriou.h"
+#include "MyDialogStructs.h"
 #include "DialogUI.generated.h"
 
 /**
@@ -40,7 +40,7 @@ public:
 class UMGAsyncTask : public FNonAbandonableTask
 {
 	/* The subtitles that we're going to display */
-	TArray<FSubtitle> Subs;
+	TArray<struct FSubtitle> Subs;
 
 	/* UI Reference */
 	UDialogUI* DialogUI;
@@ -48,7 +48,7 @@ class UMGAsyncTask : public FNonAbandonableTask
 public:
 
 	// Constructor
-	UMGAsyncTask(TArray<FSubtitle>& Subs, UDialogUI* DialogUI)
+	UMGAsyncTask(TArray<struct FSubtitle>& Subs, UDialogUI* DialogUI)
 	{
 		this->Subs = Subs;
 		this->DialogUI = DialogUI;

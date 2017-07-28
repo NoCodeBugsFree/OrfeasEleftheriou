@@ -47,7 +47,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 41 Creating EQS Contexts in C++
 + 42 Creating Custom EQS Generators in C++
 + 43 Creating Flight Paths using Splines
-+ 44
++ 44 Recreating Sniper Elite’s killshot cameras
 + 45
 + 46
 + 47

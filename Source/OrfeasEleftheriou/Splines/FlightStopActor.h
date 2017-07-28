@@ -23,8 +23,7 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-
+	
 	/** Returns the previous flight curve */
 	UCurveFloat* GetPreviousFlightCurve() { return PreviousFlightCurve; };
 

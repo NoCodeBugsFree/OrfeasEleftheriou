@@ -2,6 +2,7 @@
 
 #include "DialogUI.h"
 
+
 void UDialogUI::UpdateSubtitles(TArray<struct FSubtitle> Subtitles)
 {
 	if (!Subtitles.IsValidIndex(0)) return;

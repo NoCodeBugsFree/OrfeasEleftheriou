@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "OrfeasEleftheriou.h"
+#include "MyDialogStructs.h"
 #include "TP_ThirdPersonCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -14,7 +14,7 @@ class ATP_ThirdPersonCharacter : public ACharacter
 
 #pragma region ThirdPersonCharacter
 
-
+	//
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
@@ -92,7 +92,7 @@ public:
 	/*Performs the actual talking - informs the associated pawn if necessary in order to answer
 	The subtitles array contain all the subtitles for this talk - it should be passed to our UI*/
 	UFUNCTION(BlueprintCallable, Category = "AAA")
-		void Talk(FString Excerpt, TArray<struct FSubtitle>& Subtitles);
+	void Talk(FString Excerpt, TArray<struct FSubtitle>& Subtitles);
 
 	/*Enables / disables our talk ability. The player can't talk if he's not in a valid range*/
 	void SetTalkRangeStatus(bool Status) { bIsInTalkRange = Status; }
