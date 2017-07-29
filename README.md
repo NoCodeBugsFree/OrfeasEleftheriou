@@ -49,7 +49,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 43 Creating Flight Paths using Splines
 + 44 Recreating Sniper Elite’s killshot cameras
 + 45 Creating a C++ Level Blueprint
-+ 46
++ 46 Handling level streaming through C++
 + 47
 + 48
 + 49
