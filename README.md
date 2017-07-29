@@ -50,7 +50,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 44 Recreating Sniper Elite’s killshot cameras
 + 45 Creating a C++ Level Blueprint
 + 46 Handling level streaming through C++
-+ 47
++ 47 Dynamic Materials – Communicating with the Material Editor using C++
 + 48
 + 49
 + 50
