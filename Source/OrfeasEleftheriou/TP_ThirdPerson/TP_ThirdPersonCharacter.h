@@ -169,5 +169,19 @@ private:
 
 #pragma endregion
 
+
+#pragma region Reflection
+
+public:
+
+	/* This function will search which function to execute */
+	UFUNCTION(BlueprintCallable, Category = Reflection)
+	void ExecuteFunction(FString FunctionToExecute);
+
+	UFUNCTION()
+	void DoSomething();
+
+#pragma endregion
+
 };
 

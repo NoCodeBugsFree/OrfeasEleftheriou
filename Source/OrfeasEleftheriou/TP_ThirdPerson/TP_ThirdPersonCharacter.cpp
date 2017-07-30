@@ -212,6 +212,41 @@ void ATP_ThirdPersonCharacter::ReportNoise()
 	}
 }
 
+void ATP_ThirdPersonCharacter::ExecuteFunction(FString FunctionToExecute)
+{
+	// FindFunction will return a pointer to a UFunction based on a
+	// given FName. We use an asterisk before our FString in order to
+	// convert the FString variable to FName
+	UFunction* Function = FindFunction(*FunctionToExecute);
+
+	// When you're using a pointer - make sure to check if it's valid first!
+	if (Function)
+	{
+		// The following pointer is a void pointer,
+		// this means that it can point to anything - from raw memory to all the known types -
+		void* locals = nullptr;
+
+		// In order to execute our function we need to reserve a chunk of memory in 
+		// the execution stack for it.
+		FFrame* frame = new FFrame(this, Function, locals);
+
+		// Unfortunately the source code of the engine doesn't explain what the locals
+		// pointer is used for.
+		// After some trial and error I ended up on this code which actually works without any problem.
+
+		// Actual call of our UFunction
+		CallFunction(*frame, locals, Function);
+
+		// delete our pointer to avoid memory leaks!
+		delete frame;
+	}
+}
+
+void ATP_ThirdPersonCharacter::DoSomething()
+{
+	UE_LOG(LogTemp, Error, TEXT("DoSomething was called..."));
+}
+
 void ATP_ThirdPersonCharacter::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
