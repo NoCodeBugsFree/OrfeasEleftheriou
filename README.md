@@ -54,8 +54,8 @@ Click [here](http://orfeasel.com) to find out more about
 + 48 Implementing a basic Radar System
 + 49 Utilizing Unreal Engine’s reflection system
 + 50 Simple Skills Tree breakdown
-+ 51
-+ 52
++ 51 Introduction to UE4 Networking – Part 1
++ 52 Introduction to UE4 Networking – Part 2
 + 53
 + 54
 + 55
