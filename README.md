@@ -56,8 +56,8 @@ Click [here](http://orfeasel.com) to find out more about
 + 50 Simple Skills Tree breakdown
 + 51 Introduction to UE4 Networking – Part 1
 + 52 Introduction to UE4 Networking – Part 2
-+ 53
-+ 54
++ 53 Creating Custom Modules [TODO]
++ 54 Creating Custom Gameplay Debugger Categories
 + 55
 + 56
 + 57

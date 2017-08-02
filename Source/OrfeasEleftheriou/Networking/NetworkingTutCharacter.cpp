@@ -128,7 +128,7 @@ float ANetworkingTutCharacter::TakeDamage(float Damage, struct FDamageEvent cons
 void ANetworkingTutCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
+	
 	// Tell the engine to call the OnRep_Health and OnRep_BombCount each time
 	// a variable changes
 	DOREPLIFETIME(ANetworkingTutCharacter, Health);
