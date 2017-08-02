@@ -19,6 +19,16 @@ public class OrfeasEleftheriou : ModuleRules
 		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
 
 		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+
+		if (UEBuildConfiguration.bBuildDeveloperTools || (Target.Configuration != UnrealTargetConfiguration.Shipping && Target.Configuration != UnrealTargetConfiguration.Test))
+        {
+            PrivateDependencyModuleNames.Add("GameplayDebugger");
+            Definitions.Add("WITH_GAMEPLAY_DEBUGGER=1");
+        }
+        else
+        {
+            Definitions.Add("WITH_GAMEPLAY_DEBUGGER=0");
+        }
 		
 	}
 }

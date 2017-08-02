@@ -8,7 +8,7 @@
 #include "TP_ThirdPersonCharacter.generated.h"
 
 UCLASS(config=Game)
-class ATP_ThirdPersonCharacter : public ACharacter
+class ORFEASELEFTHERIOU_API  ATP_ThirdPersonCharacter : public ACharacter
 {
 	GENERATED_BODY()
 

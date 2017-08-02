@@ -2,5 +2,6 @@
 
 #include "OrfeasEleftheriou.h"
 #include "Modules/ModuleManager.h"
+#include "GameplayDebugger.h"
 
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, OrfeasEleftheriou, "OrfeasEleftheriou" );
