@@ -58,7 +58,7 @@ Click [here](http://orfeasel.com) to find out more about
 + 52 Introduction to UE4 Networking – Part 2
 + 53 Creating Custom Modules [TODO]
 + 54 Creating Custom Gameplay Debugger Categories [TODO]
-+ 55
++ 55 Creating a Cover System
 + 56
 + 57
 + 58
